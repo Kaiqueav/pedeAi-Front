@@ -1,60 +1,44 @@
-export type Role = 'admin' | 'garcom';
-export type CategoriaProduto = 'prato' | 'bebida' | 'sobremesa' | 'entrada';
-export type StatusPedido = 'recebido' | 'em_preparo' | 'pronto' | 'cancelado';
-export type StatusComanda = 'aberta' | 'fechada' | 'paga';
-export type Page = 'login' | 'dashboard' | 'produtos' | 'usuarios' | 'mesas' | 'cozinha' | 'comanda' | 'cardapio';
+export type Role = 'ADMIN' | 'GARCOM';
+export type CategoriaProduto = "PRATO" | "BEBIDA" | "SOBREMESA" | "ENTRADA";
+export type StatusPedido = "Recebido" | "Em Preparo" | "Pronto";
+export type StatusComanda = "aberta" | "fechada" | "paga" | "livre";
 
-export interface Usuario {
-  id: number;
-  nome: string;
-  email: string;
-  role: Role;
-  senha?: string;
+export interface User { 
+  id: number; 
+  nome: string; 
+  email: string; 
+  role: Role; 
 }
 
-export interface Produto {
-  id: string;
-  nome: string;
-  descricao?: string;
-  preco: number;
-  categoria: CategoriaProduto;
-  disponivel: boolean;
+export interface Produto { 
+  id: number; 
+  nome: string; 
+  descricao: string; 
+  preco: number; 
+  categoria: CategoriaProduto; 
 }
 
-export interface ItemPedido {
-  id: string;
-  produto: Produto;
-  quantidade: number;
-  observacao?: string;
-  precoUnitario: number;
+export interface PedidoItem { 
+  produtoId: number; 
+  nomeProduto: string; 
+  quantidade: number; 
+  observacao: string; 
 }
 
-export interface Pedido {
-  id: string;
-  status: StatusPedido;
-  dataPedido: string;
-  itensPedido: ItemPedido[];
-  comanda: Comanda;
+export interface Pedido { 
+  id: number; 
+  comandaId: number; 
+  status: StatusPedido; 
+  itens: PedidoItem[]; 
+  timestamp: Date; 
 }
 
-export interface Comanda {
-  id: string;
-  status: StatusComanda;
-  mesa: Mesa;
-  pedidos: Pedido[];
-  total?: number;
+export interface Comanda { 
+  id: number; 
+  mesaId: number; 
+  status: StatusComanda; 
 }
 
-export interface Mesa {
-  id: number;
-  numero: number;
-  comandaAtiva?: Comanda | null;
-}
-
-export type CarrinhoItem = {
-    produtoId: string;
-    nome: string;
-    quantidade: number;
-    precoUnitario: number;
-    observacao: string;
+export interface Mesa { 
+  id: number; 
 }
