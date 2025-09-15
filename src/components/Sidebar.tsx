@@ -1,23 +1,53 @@
-import type { User } from "../types";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import type { User } from '../types';
 
-interface SideBarProps{
-    user: User,
-    navigate: (page: string)=> void;
+interface SidebarProps {
+  user: User;
 }
 
-const Sidebar: React.FC<SideBarProps> = ({user, navigate})=>( <aside className="w-64 bg-gray-800 text-white flex-col hidden md:flex">
-        <div className="p-4 text-2xl font-bold border-b border-gray-700">PedeAí</div>
-        <nav className="flex-grow p-4 space-y-2">
-            {user.role === 'ADMIN' && <a onClick={() => navigate('dashboard')} className="block py-2 px-3 rounded hover:bg-gray-700 cursor-pointer">Dashboard</a>}
-            {user.role === 'ADMIN' && <a onClick={() => navigate('produtos')} className="block py-2 px-3 rounded hover:bg-gray-700 cursor-pointer">Produtos</a>}
-            {user.role === 'ADMIN' && <a onClick={() => navigate('usuarios')} className="block py-2 px-3 rounded hover:bg-gray-700 cursor-pointer">Usuários</a>}
-            <a onClick={() => navigate('mesas')} className="block py-2 px-3 rounded hover:bg-gray-700 cursor-pointer">Mesas</a>
-            <a onClick={() => navigate('cozinha')} className="block py-2 px-3 rounded hover:bg-gray-700 cursor-pointer">Cozinha (KDS)</a>
-        </nav>
-        <div className="p-4 border-t border-gray-700">
-            <p>{user.nome}</p>
-            <p className="text-sm text-gray-400">{user.role}</p>
-        </div>
-    </aside>)
+const Sidebar: React.FC<SidebarProps> = ({ user }) => {
+  const location = useLocation();
 
-    export default Sidebar;
+  const getLinkClass = (path: string) => {
+    return location.pathname === path
+      ? 'block py-2 px-3 rounded bg-gray-700 cursor-pointer'
+      : 'block py-2 px-3 rounded hover:bg-gray-700 cursor-pointer';
+  };
+
+  return (
+    <aside className="w-64 bg-gray-800 text-white flex-col hidden md:flex">
+      <div className="p-4 text-2xl font-bold border-b border-gray-700">PedeAí</div>
+      <nav className="flex-grow p-4 space-y-2">
+        {/* CORREÇÃO: Verificar por 'admin' em minúsculas */}
+        {user.role === 'admin' && (
+          <Link to="/dashboard" className={getLinkClass('/dashboard')}>
+            Dashboard
+          </Link>
+        )}
+        {user.role === 'admin' && (
+          <Link to="/produtos" className={getLinkClass('/produtos')}>
+            Produtos
+          </Link>
+        )}
+        {user.role === 'admin' && (
+          <Link to="/usuarios" className={getLinkClass('/usuarios')}>
+            Usuários
+          </Link>
+        )}
+        <Link to="/mesas" className={getLinkClass('/mesas')}>
+          Mesas
+        </Link>
+        <Link to="/cozinha" className={getLinkClass('/cozinha')}>
+          Cozinha (KDS)
+        </Link>
+      </nav>
+      <div className="p-4 border-t border-gray-700">
+        <p>{user.nome}</p>
+        <p className="text-sm text-gray-400 capitalize">{user.role}</p>
+      </div>
+    </aside>
+  );
+};
+
+export default Sidebar;
