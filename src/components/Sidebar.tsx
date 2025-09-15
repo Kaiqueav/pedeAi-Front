@@ -19,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user }) => {
     <aside className="w-64 bg-gray-800 text-white flex-col hidden md:flex">
       <div className="p-4 text-2xl font-bold border-b border-gray-700">PedeAí</div>
       <nav className="flex-grow p-4 space-y-2">
-        {/* CORREÇÃO: Verificar por 'admin' em minúsculas */}
+       
         {user.role === 'admin' && (
           <Link to="/dashboard" className={getLinkClass('/dashboard')}>
             Dashboard
@@ -37,6 +37,10 @@ const Sidebar: React.FC<SidebarProps> = ({ user }) => {
         )}
         <Link to="/mesas" className={getLinkClass('/mesas')}>
           Mesas
+        </Link>
+      
+        <Link to="/comandas" className={getLinkClass('/comandas')}>
+        Comandas
         </Link>
         <Link to="/cozinha" className={getLinkClass('/cozinha')}>
           Cozinha (KDS)
