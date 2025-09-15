@@ -1,6 +1,6 @@
 // --- TIPOS GLOBAIS DA APLICAÇÃO ---
 
-export type Role = 'ADMIN' | 'GARCOM';
+export type Role = 'admin' | 'garcom';
 export type CategoriaProduto = "prato" | "bebida" | "sobremesa" | "entrada";
 
 // CORREÇÃO AQUI: Alinhar com os valores do enum do backend
