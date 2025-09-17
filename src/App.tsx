@@ -5,25 +5,26 @@ import { Routes, Route, useNavigate, useLocation, Navigate, Link } from 'react-r
 // Tipos, Serviços e Componentes
 import type { User } from './types';
 import { authService } from './services/authService';
-import Header from './components/header'; // Corrigido para minúsculas
+import Header from './components/header';
 import Sidebar from './components/Sidebar';
 
 // Páginas
 import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashBoardPage'; // Nome do ficheiro é DashBoardPage.tsx
+import DashboardPage from './pages/DashBoardPage';
 import ProdutosPage from './pages/ProdutosPage';
 import UsuariosPage from './pages/UsuariosPage';
 import MesasPage from './pages/MesasPage';
 import CozinhaPage from './pages/CozinhaPage';
 import ComandaPage from './pages/ComandaPage';
 import CardapioPage from './pages/CardapioPage';
+import ComandasListPage from './pages/ComandasListPage';
 
 // Componente Wrapper para o Layout Principal
 const AdminLayout: React.FC<{ user: User; onLogout: () => void; children: React.ReactNode }> = ({ user, onLogout, children }) => (
     <div className="flex h-screen bg-gray-100 font-sans">
         <Sidebar user={user} />
         <div className="flex-1 flex flex-col">
-            <Header onLogout={onLogout} />
+            <Header onLogout={onLogout} user={user} />
             <main className="flex-1 p-6 overflow-y-auto">{children}</main>
         </div>
     </div>
@@ -73,8 +74,8 @@ export default function App() {
                                 <Route path="/usuarios" element={<UsuariosPage />} />
                                 <Route path="/mesas" element={<MesasPage />} />
                                 <Route path="/cozinha" element={<CozinhaPage />} />
+                                <Route path="/comandas" element={<ComandasListPage />} />
                                 <Route path="/comanda/:comandaId" element={<ComandaPageWrapper />} />
-                                <Route path="/comandas" element={<ComandasListPage />} /> 
                                 <Route path="/" element={<Navigate to={user.role === 'admin' ? '/dashboard' : '/mesas'} />} />
                                 <Route path="*" element={
                                     <div className='text-center'>
@@ -95,7 +96,6 @@ export default function App() {
 
 // Componente Wrapper para a ComandaPage
 import { useParams } from 'react-router-dom';
-import ComandasListPage from './pages/ComandasListPage';
 
 const ComandaPageWrapper = () => {
     const { comandaId } = useParams<{ comandaId: string }>();
