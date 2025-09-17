@@ -12,71 +12,46 @@ const ComandasListPage: React.FC = () => {
         const fetchComandas = async () => {
             try {
                 const response = await api.get<Comanda[]>('/comanda');
-                // Filtra para mostrar apenas comandas que não estão pagas
                 const comandasAtivas = response.data.filter(c => c.status !== 'paga');
                 setComandas(comandasAtivas);
             } catch (err) {
-                console.error("Erro ao buscar comandas:", err);
                 setError("Não foi possível carregar a lista de comandas.");
             } finally {
                 setLoading(false);
             }
         };
-
         fetchComandas();
     }, []);
 
-    if (loading) {
-        return <p>A carregar comandas...</p>;
-    }
-
-    if (error) {
-        return <p className="text-red-500">{error}</p>;
-    }
+    if (loading) return <p>A carregar comandas...</p>;
+    if (error) return <p className="text-red-500">{error}</p>;
 
     return (
         <div>
             <h1 className="text-3xl font-bold text-gray-800 mb-6">Comandas Ativas</h1>
-            <div className="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
-                <table className="w-full text-left">
-                    <thead>
-                        <tr className="border-b">
-                            <th className="p-3">ID da Comanda</th>
-                            <th className="p-3">Mesa</th>
-                            <th className="p-3">Status</th>
-                            <th className="p-3">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {comandas.length > 0 ? (
-                            comandas.map(comanda => (
-                                <tr key={comanda.id} className="border-b hover:bg-gray-50">
-                                    <td className="p-3 font-mono text-sm">{comanda.id.substring(0, 8)}...</td>
-                                    <td className="p-3">{comanda.mesa?.numero || 'N/A'}</td>
-                                    <td className="p-3">
-                                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                                            comanda.status === 'aberta' ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-800'
-                                        }`}>
-                                            {comanda.status}
-                                        </span>
-                                    </td>
-                                    <td className="p-3">
-                                        <Link 
-                                            to={`/comanda/${comanda.id}`} 
-                                            className="text-orange-600 hover:underline font-semibold"
-                                        >
-                                            Ver Detalhes
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan={4} className="p-3 text-center text-gray-500">Nenhuma comanda ativa no momento.</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+            <div className="bg-white rounded-lg shadow-md">
+                {comandas.length > 0 ? (
+                    comandas.map(comanda => (
+                        <div key={comanda.id} className="grid grid-cols-2 gap-4 p-4 border-b last:border-b-0 hover:bg-gray-50 items-center">
+                            <div>
+                                <div className="font-bold text-gray-800">Mesa {comanda.mesa?.numero || 'N/A'}</div>
+                                <div className="font-mono text-sm text-gray-500">{comanda.id.substring(0, 8)}...</div>
+                            </div>
+                            <div className="flex flex-col items-end">
+                                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                                    comanda.status === 'aberta' ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-800'
+                                }`}>
+                                    {comanda.status}
+                                </span>
+                                <Link to={`/comanda/${comanda.id}`} className="text-orange-600 hover:underline font-semibold mt-2">
+                                    Ver Detalhes
+                                </Link>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="p-4 text-center text-gray-500">Nenhuma comanda ativa no momento.</div>
+                )}
             </div>
         </div>
     );
