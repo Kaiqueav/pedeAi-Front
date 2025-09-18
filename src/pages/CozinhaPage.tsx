@@ -19,15 +19,18 @@ const ColunaKanban: React.FC<{ titulo: StatusPedido, pedidos: Pedido[], onUpdate
     };
 
     return (
-        // A coluna agora ocupa a largura total em ecrãs pequenos e 1/3 em ecrãs médios e maiores
-        <div className="bg-gray-100 rounded-lg p-3 w-full md:w-1/3 flex-shrink-0">
+       <div className="bg-gray-100 rounded-lg p-3 w-full md:w-1/3 flex-shrink-0">
             <h2 className="text-xl font-bold mb-4 text-gray-700">{formatStatus(titulo)}</h2>
             <div className="space-y-4">
                 {pedidos.map(pedido => (
                     <div key={pedido.id} className="bg-white p-4 rounded-lg shadow">
                         <div className="flex justify-between items-center">
                             <p className="font-bold">Pedido #{pedido.id.substring(0, 5)}</p>
-                            <p className="text-sm text-gray-500">Mesa {pedido.comandaId?.mesa?.numero || 'N/A'}</p>
+                            {/* --- CORREÇÃO AQUI --- */}
+                            {/* Alterado de "pedido.comandaId" para "pedido.comanda" */}
+                            <p className="text-sm text-gray-500">
+                                Mesa {pedido.comanda?.mesa?.numero || 'N/A'}
+                            </p>
                         </div>
                         <ul className="list-disc list-inside mt-2 text-sm">
                             {pedido.itensPedido?.map((item, index) => (
