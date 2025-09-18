@@ -1,11 +1,9 @@
-// --- TIPOS GLOBAIS DA APLICAÇÃO ---
-
 export type Role = 'admin' | 'garcom';
 export type CategoriaProduto = "prato" | "bebida" | "sobremesa" | "entrada";
-
-// CORREÇÃO AQUI: Alinhar com os valores do enum do backend
 export type StatusPedido = "recebido" | "em_preparo" | "pronto" | "cancelado";
 export type StatusComanda = "aberta" | "fechada" | "paga";
+
+// --- INTERFACES QUE REPRESENTAM AS ENTIDADES DO BACKEND ---
 
 export interface User { 
   id: number; 
@@ -14,8 +12,13 @@ export interface User {
   role: Role; 
 }
 
+export interface Mesa { 
+  id: number;
+  numero: number; 
+}
+
 export interface Produto { 
-  id: string; // O backend usa UUID para produtos
+  id: string;
   nome: string; 
   descricao: string; 
   preco: number; 
@@ -23,31 +26,34 @@ export interface Produto {
   disponivel: boolean;
 }
 
-export interface PedidoItem { 
-  produtoId: string; 
-  nomeProduto: string; 
-  quantidade: number; 
-  observacao: string;
-}
 
-export interface Pedido {
-  itensPedido: any; 
-  id: string; // O backend usa UUID para pedidos
-  comandaId: string; 
-  status: StatusPedido; 
-  itens: PedidoItem[]; 
-  timestamp: Date; 
+export interface ItemPedido { 
+  id: string; //
+  quantidade: number; 
+  precoUnitario: number;
+  observacao: string;
+  produto: Produto; 
 }
 
 export interface Comanda { 
-  id: string; // O backend usa UUID para comandas
-  mesaId: number; 
+  id: string; 
   status: StatusComanda;
-  mesa?: Mesa; // Adicionado para corresponder aos dados da API
-  pedidos: Pedido[]; // Adicionado para corresponder aos dados da API
+  dataAbertura: Date;
+  mesa: Mesa; 
+  pedidos: Pedido[]; 
 }
 
-export interface Mesa { 
-  id: number;
-  numero: number; // Adicionado para corresponder aos dados da API
+export interface Pedido {
+  id: string;
+  status: StatusPedido; 
+  dataPedido: Date;
+
+  itensPedido: ItemPedido[]; 
+  comanda: Comanda;
+}
+
+// --- TIPO ESPECÍFICO PARA O CARRINHO NO FRONTEND ---
+export interface ItemCarrinho extends Produto {
+  quantidade: number;
+  observacao?: string;
 }
