@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate, Link } from 'react-router-dom';
-
-// Tipos, Serviços e Componentes
-// Tipos, Serviços e Componentes
 import type { User } from './types';
 import { authService } from './services/authService';
 import Header from './components/header';
 import Sidebar from './components/Sidebar';
+import PrivateRoute from './components/PrivateRoute';
 
-// Páginas
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashBoardPage';
 import ProdutosPage from './pages/ProdutosPage';
@@ -69,14 +66,21 @@ export default function App() {
                     user ? (
                         <AdminLayout user={user} onLogout={handleLogout}>
                             <Routes>
-                                <Route path="/dashboard" element={<DashboardPage />} />
-                                <Route path="/produtos" element={<ProdutosPage />} />
-                                <Route path="/usuarios" element={<UsuariosPage />} />
+                                {/* Rotas de Admin */}
+                                <Route path="/dashboard" element={<PrivateRoute roles={['admin']}><DashboardPage /></PrivateRoute>} />
+                                <Route path="/produtos" element={<PrivateRoute roles={['admin']}><ProdutosPage /></PrivateRoute>} />
+                                <Route path="/usuarios" element={<PrivateRoute roles={['admin']}><UsuariosPage /></PrivateRoute>} />
+
+                                {/* Rotas Comuns */}
                                 <Route path="/mesas" element={<MesasPage />} />
                                 <Route path="/cozinha" element={<CozinhaPage />} />
                                 <Route path="/comandas" element={<ComandasListPage />} />
                                 <Route path="/comanda/:comandaId" element={<ComandaPageWrapper />} />
+
+                                {/* Redirecionamento Padrão */}
                                 <Route path="/" element={<Navigate to={user.role === 'admin' ? '/dashboard' : '/mesas'} />} />
+
+                                {/* Rota 404 */}
                                 <Route path="*" element={
                                     <div className='text-center'>
                                         <h2 className='text-2xl font-bold'>404 - Página Não Encontrada</h2>
@@ -94,7 +98,6 @@ export default function App() {
     );
 }
 
-// Componente Wrapper para a ComandaPage
 import { useParams } from 'react-router-dom';
 
 const ComandaPageWrapper = () => {
