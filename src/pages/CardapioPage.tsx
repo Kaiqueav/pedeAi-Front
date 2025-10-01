@@ -4,7 +4,9 @@ import api from '../services/api';
 import type { Produto, CategoriaProduto, ItemCarrinho, Mesa, Pedido, StatusPedido, ItemPedido } from '../types';
 import CarrinhoModal from '../components/CarrinhoModal';
 
+// --- TIPOS E INTERFACES ESPECÍFICOS PARA ESTA PÁGINA ---
 
+// DTO para enviar a criação de um pedido ao backend
 interface ItemPedidoDto {
   produtoId: string;
   quantidade: number;
@@ -23,7 +25,6 @@ const ShoppingCartIcon = () => (
     </svg>
 );
 
-// Componente para exibir o status do pedido após ser enviado
 const StatusTracker: React.FC<{ pedido: Pedido, onNovoPedido: () => void }> = ({ pedido, onNovoPedido }) => {
     const getStatusInfo = (status: StatusPedido) => {
         switch (status) {
@@ -53,7 +54,7 @@ const StatusTracker: React.FC<{ pedido: Pedido, onNovoPedido: () => void }> = ({
                     </span>
                 </div>
                 <ul className="list-disc list-inside mt-4 text-left text-sm text-gray-700">
-                   
+                  
                     {pedido.itensPedido.map((item: ItemPedido, index: number) => (
                         <li key={index}>{item.quantidade}x {item.produto.nome}</li>
                     ))}
@@ -68,12 +69,11 @@ const StatusTracker: React.FC<{ pedido: Pedido, onNovoPedido: () => void }> = ({
 };
 
 
-// --- COMPONENTE PRINCIPAL DA PÁGINA DO CARDÁPIO ---
 
 const CardapioPage: React.FC = () => {
     const { numeroMesa } = useParams<{ numeroMesa: string }>();
     
-    
+    // Estados
     const [mesa, setMesa] = useState<Mesa | null>(null);
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [carrinho, setCarrinho] = useState<ItemCarrinho[]>([]);
@@ -86,7 +86,7 @@ const CardapioPage: React.FC = () => {
         return pedidoGuardado ? JSON.parse(pedidoGuardado) : null;
     });
 
-    // busca de dados
+    // Lógica de busca de dados
     useEffect(() => {
         const fetchInitialData = async () => {
             if (!numeroMesa) {
@@ -113,7 +113,7 @@ const CardapioPage: React.FC = () => {
         }
     }, [numeroMesa, pedidoRecente]);
 
-    // verificar o status do pedido
+    // Lógica para verificar o status do pedido
     useEffect(() => {
         if (!pedidoRecente || pedidoRecente.status === 'pronto') return;
         const intervalId = setInterval(async () => {
@@ -223,17 +223,17 @@ const CardapioPage: React.FC = () => {
                 {Object.keys(produtosAgrupados).map((categoria) => (
                     <section key={categoria} className="mb-12">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 border-b-2 border-orange-500 pb-2 mb-6 capitalize">{categoria}</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                           
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {/* CORREÇÃO: Tipagem explícita para o parâmetro 'produto' */}
                             {produtosAgrupados[categoria as CategoriaProduto].map((produto: Produto) => (
                                 <div key={produto.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
-                                    <div className="p-6 flex-grow">
-                                        <h3 className="text-xl font-semibold text-gray-900">{produto.nome}</h3>
+                                    <div className="p-4 md:p-6 flex-grow">
+                                        <h3 className="text-lg md:text-xl font-semibold text-gray-900">{produto.nome}</h3>
                                         <p className="text-gray-600 mt-2 text-sm">{produto.descricao}</p>
                                     </div>
-                                    <div className="p-6 bg-gray-50 flex justify-between items-center">
-                                        <p className="text-lg font-bold text-green-600">{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                                        <button onClick={() => adicionarAoCarrinho(produto)} className="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+                                    <div className="p-4 md:p-6 bg-gray-50 flex justify-between items-center">
+                                        <p className="text-md md:text-lg font-bold text-green-600">{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                        <button onClick={() => adicionarAoCarrinho(produto)} className="bg-orange-500 text-white font-bold py-2 px-3 md:px-4 rounded-lg hover:bg-orange-600 transition-colors text-sm">
                                             Adicionar
                                         </button>
                                     </div>
@@ -245,7 +245,7 @@ const CardapioPage: React.FC = () => {
             </main>
             
             {totalItensCarrinho > 0 && (
-                <div className="fixed bottom-6 right-6">
+                <div className="fixed bottom-6 right-6 z-30">
                     <button 
                         onClick={() => setIsCartOpen(true)} 
                         className="bg-orange-500 text-white font-bold rounded-full p-4 shadow-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 flex items-center animate-pulse"
