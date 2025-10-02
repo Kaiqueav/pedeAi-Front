@@ -1,6 +1,6 @@
 export type Role = 'admin' | 'garcom';
 export type CategoriaProduto = "prato" | "bebida" | "sobremesa" | "entrada";
-export type StatusPedido = "recebido" | "em_preparo" | "pronto" | "cancelado";
+export type StatusPedido = "recebido" | "em_preparo" | "pronto" | "cancelado" | "paga";
 export type StatusComanda = "aberta" | "fechada" | "paga";
 
 // --- INTERFACES QUE REPRESENTAM AS ENTIDADES DO BACKEND ---
