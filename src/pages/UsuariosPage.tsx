@@ -23,18 +23,18 @@ const UsuariosPage: React.FC = () => {
         <div>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">Gerenciamento de Usuários</h1>
-                {/* Adicionar funcionalidade de criação de usuário aqui se necessário */}
+            
             </div>
 
             <div className="bg-white rounded-lg shadow-md">
-                {/* Cabeçalho da Tabela para ecrãs maiores */}
+               
                 <div className="hidden md:grid md:grid-cols-4 p-4 border-b font-bold text-left">
                     <div className="px-3">Nome</div>
                     <div className="px-3">Email</div>
                     <div className="px-3">Cargo</div>
                     <div className="px-3">Ações</div>
                 </div>
-                {/* Lista de Cartões/Linhas */}
+             
                 <div>
                     {usuarios.map(u => (
                         <div key={u.id} className="grid grid-cols-2 md:grid-cols-4 p-4 border-b last:border-b-0 hover:bg-gray-50 items-center">

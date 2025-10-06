@@ -8,7 +8,7 @@ interface LoginPageProps {
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('admin@pedeai.com');
-    const [password, setPassword] = useState('123'); // Use uma senha padrão para dev
+    const [password, setPassword] = useState('123'); 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 

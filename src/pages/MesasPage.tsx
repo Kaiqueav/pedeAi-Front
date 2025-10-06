@@ -9,7 +9,7 @@ const MesasPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Estados para o formulário de criação
+  
     const [numeroNovaMesa, setNumeroNovaMesa] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [creationError, setCreationError] = useState<string | null>(null);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import type { Produto } from '../types';
-import ProdutoFormModal from '../components/ProdutoFormModal'; // 1. Importe o novo componente
+import ProdutoFormModal from '../components/ProdutoFormModal'; 
 
 const PlusIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" /></svg>;
 const EditIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" /></svg>;
@@ -11,7 +11,7 @@ const ProdutosPage: React.FC = () => {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [loading, setLoading] = useState(true);
     
-    // 2. Estado para controlar a visibilidade do modal e o produto a ser editado
+    // 2. Es
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [produtoParaEditar, setProdutoParaEditar] = useState<Produto | null>(null);
 
@@ -27,7 +27,7 @@ const ProdutosPage: React.FC = () => {
         fetchProdutos();
     }, []);
     
-    // Funções para abrir e fechar o modal
+  
     const handleOpenModal = (produto: Produto | null = null) => {
         setProdutoParaEditar(produto);
         setIsModalOpen(true);
@@ -38,7 +38,7 @@ const ProdutosPage: React.FC = () => {
         setProdutoParaEditar(null);
     };
 
-    // Função para recarregar os produtos após salvar
+ 
     const handleSave = () => {
         fetchProdutos();
     };
@@ -47,7 +47,7 @@ const ProdutosPage: React.FC = () => {
         if (window.confirm("Tem a certeza que deseja apagar este produto?")) {
             try {
                 await api.delete(`/produto/${produtoId}`);
-                fetchProdutos(); // Recarrega a lista
+                fetchProdutos(); 
             } catch (error) {
                 console.error("Erro ao apagar produto:", error);
                 alert("Não foi possível apagar o produto.");
@@ -59,7 +59,7 @@ const ProdutosPage: React.FC = () => {
 
     return (
         <div>
-            {/* 3. Renderiza o modal condicionalmente */}
+    
             {isModalOpen && (
                 <ProdutoFormModal 
                     produto={produtoParaEditar}
@@ -70,7 +70,7 @@ const ProdutosPage: React.FC = () => {
 
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">Gerenciamento de Produtos</h1>
-                {/* 4. O botão agora abre o modal para criação */}
+              
                 <button onClick={() => handleOpenModal()} className="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 flex items-center">
                     <PlusIcon /> Adicionar Produto
                 </button>
@@ -93,7 +93,6 @@ const ProdutosPage: React.FC = () => {
                                 <td className="p-3">{p.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                                 <td className="p-3 capitalize">{p.categoria}</td>
                                 <td className="p-3 flex space-x-2">
-                                    {/* 5. Botão de editar abre o modal com os dados do produto */}
                                     <button onClick={() => handleOpenModal(p)} className="text-blue-600 hover:text-blue-800"><EditIcon /></button>
                                     <button onClick={() => handleDelete(p.id)} className="text-red-600 hover:text-red-800"><DeleteIcon /></button>
                                 </td>

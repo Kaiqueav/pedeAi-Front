@@ -16,7 +16,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, roles }) => {
   }
 
   if (roles && roles.length > 0 && !roles.includes(user.role)) {
-    return <Navigate to="/mesas" />; // Redireciona para uma página padrão se não tiver a role
+    return <Navigate to="/mesas" />;
   }
 
   return <>{children}</>;

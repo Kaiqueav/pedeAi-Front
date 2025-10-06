@@ -3,12 +3,12 @@ import type { CategoriaProduto, Produto } from '../types';
 import api from '../services/api';
 
 interface ProdutoFormModalProps {
-  produto?: Produto | null; // Produto para edição (opcional)
+  produto?: Produto | null; 
   onClose: () => void;
   onSave: () => void;
 }
 
-// O tipo de dados que o formulário irá gerir
+
 type FormData = {
   nome: string;
   descricao: string;
@@ -39,7 +39,7 @@ const ProdutoFormModal: React.FC<ProdutoFormModalProps> = ({ produto, onClose, o
     setIsSubmitting(true);
     setError(null);
 
-    // Validação simples
+  
     if (!formData.nome || formData.preco <= 0) {
         setError("Nome e Preço (maior que zero) são obrigatórios.");
         setIsSubmitting(false);
@@ -48,14 +48,14 @@ const ProdutoFormModal: React.FC<ProdutoFormModalProps> = ({ produto, onClose, o
 
     try {
         if (produto) {
-            // Lógica de edição (PATCH)
+           
             await api.patch(`/produto/${produto.id}`, formData);
         } else {
-            // Lógica de criação (POST)
+            
             await api.post('/produto', formData);
         }
-        onSave(); // Avisa o componente pai para recarregar a lista
-        onClose(); // Fecha o modal
+        onSave(); 
+        onClose(); 
     } catch (err: any) {
         console.error("Erro ao salvar produto:", err);
         setError(err.response?.data?.message || "Ocorreu um erro ao salvar o produto.");
@@ -65,9 +65,9 @@ const ProdutoFormModal: React.FC<ProdutoFormModalProps> = ({ produto, onClose, o
   };
 
   return (
-    // Fundo escuro do modal
+   
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      {/* Conteúdo do modal */}
+     
       <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6">{produto ? 'Editar Produto' : 'Criar Novo Produto'}</h2>
         <form onSubmit={handleSubmit}>

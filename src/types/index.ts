@@ -3,7 +3,7 @@ export type CategoriaProduto = "prato" | "bebida" | "sobremesa" | "entrada";
 export type StatusPedido = "recebido" | "em_preparo" | "pronto" | "cancelado" | "paga";
 export type StatusComanda = "aberta" | "fechada" | "paga";
 
-// --- INTERFACES QUE REPRESENTAM AS ENTIDADES DO BACKEND ---
+
 
 export interface User { 
   id: number; 
@@ -52,7 +52,6 @@ export interface Pedido {
   comanda: Comanda;
 }
 
-// --- TIPO ESPECÍFICO PARA O CARRINHO NO FRONTEND ---
 export interface ItemCarrinho extends Produto {
   quantidade: number;
   observacao?: string;

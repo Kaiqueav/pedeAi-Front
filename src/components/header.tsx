@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // <-- ESTA LINHA É A CORREÇÃO
+import React, { useState } from 'react'; 
 import { Link } from 'react-router-dom';
 import type { User } from '../types';
 
@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout, user }) => {
 
   return (
     <header className="bg-white shadow-md p-4 flex justify-between items-center relative z-10">
-      {/* Botão Hambúrguer - Visível apenas em ecrãs pequenos */}
+     
       <div className="md:hidden">
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-600 hover:text-orange-600">
           {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout, user }) => {
         </button>
       </div>
       
-      {/* Menu Móvel - Aparece quando o estado isMobileMenuOpen é true */}
+    
       {isMobileMenuOpen && (
         <nav className="absolute top-full left-0 w-full bg-white shadow-lg md:hidden z-20">
           <div className="flex flex-col p-4 space-y-2">

@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import type { Comanda } from '../types'; // Certifique-se que o tipo Comanda está correto em types/index.ts
- // Certifique-se que o tipo Comanda está correto em types/index.ts
+import type { Comanda } from '../types';
 
-// A interface da API retorna o total, então vamos estender o tipo base
+
 interface ComandaComTotal extends Comanda {
     total: number;
 }
 
-// 1. DEFINIR AS PROPS QUE O COMPONENTE ESPERA RECEBER
 interface ComandaPageProps {
-  comandaId: string; // Corrigido de 'number' para 'string'
+  comandaId: string; 
 }
 
-// 2. USAR A INTERFACE DE PROPS NA DEFINIÇÃO DO COMPONENTE
+
 const ComandaPage: React.FC<ComandaPageProps> = ({ comandaId }) => {
     const [comanda, setComanda] = useState<ComandaComTotal | null>(null);
     const [loading, setLoading] = useState(true);
@@ -38,12 +36,12 @@ const ComandaPage: React.FC<ComandaPageProps> = ({ comandaId }) => {
             .finally(() => setLoading(false));
     };
 
-    // O useEffect agora depende de `comandaId` para re-buscar se o ID mudar
+  
     useEffect(() => {
         fetchComanda();
     }, [comandaId]);
 
-    // Funções para fechar e pagar a conta...
+   
     const fecharConta = async () => {
         if (!comanda) return;
         try {
@@ -72,7 +70,7 @@ const ComandaPage: React.FC<ComandaPageProps> = ({ comandaId }) => {
 
     return (
         <div>
-            {/* O JSX da comanda permanece o mesmo */}
+          
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Comanda - Mesa {comanda.mesa?.numero}</h1>
             <p className="mb-6 text-gray-600">Status: <span className="font-semibold capitalize">{comanda.status}</span></p>
 

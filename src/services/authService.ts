@@ -7,9 +7,6 @@ interface LoginResponse {
   access_token: string;
 }
 
-// Nota: O seu backend precisa de um endpoint POST /auth/login que aceite email/senha
-// e retorne os dados do usuário e um token JWT.
-// Esta é uma implementação comum em NestJS.
 
 const login = async (email: string, senha: string): Promise<User> => {
   try {

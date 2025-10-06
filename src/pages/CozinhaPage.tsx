@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import type { Pedido, StatusPedido } from '../types';
 
-// Componente auxiliar para formatar o status para exibição
+
 const formatStatus = (status: StatusPedido) => {
     return status.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
 };
@@ -26,8 +26,7 @@ const ColunaKanban: React.FC<{ titulo: StatusPedido, pedidos: Pedido[], onUpdate
                     <div key={pedido.id} className="bg-white p-4 rounded-lg shadow">
                         <div className="flex justify-between items-center">
                             <p className="font-bold">Pedido #{pedido.id.substring(0, 5)}</p>
-                            {/* --- CORREÇÃO AQUI --- */}
-                            {/* Alterado de "pedido.comandaId" para "pedido.comanda" */}
+             
                             <p className="text-sm text-gray-500">
                                 Mesa {pedido.comanda?.mesa?.numero || 'N/A'}
                             </p>
@@ -79,7 +78,7 @@ const CozinhaPage: React.FC = () => {
     return (
         <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Acompanhamento de Pedidos (KDS)</h1>
-            {/* O layout agora é um flex-col em mobile e flex-row em desktop */}
+          
             <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                 <ColunaKanban titulo="recebido" pedidos={pedidos.filter(p => p.status === 'recebido')} onUpdate={fetchPedidos} />
                 <ColunaKanban titulo="em_preparo" pedidos={pedidos.filter(p => p.status === 'em_preparo')} onUpdate={fetchPedidos} />

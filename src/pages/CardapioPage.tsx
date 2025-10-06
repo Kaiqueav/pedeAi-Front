@@ -4,9 +4,7 @@ import api from '../services/api';
 import type { Produto, CategoriaProduto, ItemCarrinho, Mesa, Pedido, StatusPedido, ItemPedido } from '../types';
 import CarrinhoModal from '../components/CarrinhoModal';
 
-// --- TIPOS E INTERFACES ESPECÍFICOS PARA ESTA PÁGINA ---
 
-// DTO para enviar a criação de um pedido ao backend
 interface ItemPedidoDto {
   produtoId: string;
   quantidade: number;
@@ -86,7 +84,7 @@ const CardapioPage: React.FC = () => {
         return pedidoGuardado ? JSON.parse(pedidoGuardado) : null;
     });
 
-    // Lógica de busca de dados
+   
     useEffect(() => {
         const fetchInitialData = async () => {
             if (!numeroMesa) {
@@ -113,7 +111,7 @@ const CardapioPage: React.FC = () => {
         }
     }, [numeroMesa, pedidoRecente]);
 
-    // Lógica para verificar o status do pedido
+
     useEffect(() => {
         if (!pedidoRecente || pedidoRecente.status === 'pronto') return;
         const intervalId = setInterval(async () => {
@@ -132,7 +130,7 @@ const CardapioPage: React.FC = () => {
         return () => clearInterval(intervalId);
     }, [pedidoRecente?.id, numeroMesa]);
 
-    // Lógica do carrinho
+    
     const adicionarAoCarrinho = (produto: Produto) => {
         setCarrinho(prev => {
             const itemExistente = prev.find(item => item.id === produto.id);
@@ -195,7 +193,6 @@ const CardapioPage: React.FC = () => {
         return acc;
     }, {} as Record<CategoriaProduto, Produto[]>);
     
-    // --- Renderização ---
     if (loading) return <div className="text-center p-10">A carregar...</div>;
     if (error) return <div className="text-center p-10 text-red-500">{error}</div>;
 
@@ -224,7 +221,7 @@ const CardapioPage: React.FC = () => {
                     <section key={categoria} className="mb-12">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 border-b-2 border-orange-500 pb-2 mb-6 capitalize">{categoria}</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {/* CORREÇÃO: Tipagem explícita para o parâmetro 'produto' */}
+                      
                             {produtosAgrupados[categoria as CategoriaProduto].map((produto: Produto) => (
                                 <div key={produto.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
                                     <div className="p-4 md:p-6 flex-grow">
