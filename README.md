@@ -32,7 +32,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/seu-usuario/pedeai-front.git](https://github.com/seu-usuario/pedeai-front.git)
+    git clone [https://github.com/kaiqueav/pedeai-front.git](https://github.com/kaiqueav/pedeai-front.git)
     ```
 
 2.  **Acesse a pasta do projeto:**
